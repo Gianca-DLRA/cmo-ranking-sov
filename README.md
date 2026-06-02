@@ -10,7 +10,7 @@ El modelo propuesto parte de la premisa de que el SOV es un fenómeno multidimen
 Dado lo anterior, el SOV total se define como una combinación ponderada de cuatro componentes:
 
 $$
-SOV_{total} = w_1(SOV_{engagement}) + w_2(SOV_{menciones}) + w_3(SOV_{search}) + w_4(SOV_{media})
+SOV_{total} = w_1(SOV_{engagement}) + w_2(SOV_{menciones}) + w_3(SOV_{search})
 $$
 
 # Componentes del modelo
@@ -33,7 +33,7 @@ El engagement incluye interacciones como "likes", comentarios, compartidos y vis
 **Justificación:**
 Este componente captura la **capacidad del contenido para generar atención e interacción**, siendo uno de los indicadores más directos del impacto de la estrategia de marketing digital.
 
-## 2. SOV de menciones (25%)
+## 2. SOV de menciones (30%)
 
 Este componente mide la proporción de menciones que recibe cada equipo dentro del total de la conversación digital.
 
@@ -51,7 +51,7 @@ Se consideran menciones en redes sociales, foros y otros espacios digitales púb
 **Justificación:**
 Refleja el **nivel de presencia espontánea en la conversación**, incluyendo tanto contenido generado por usuarios como discusiones orgánicas.
 
-## 3. SOV de búsqueda (25%)
+## 3. SOV de búsqueda (30%)
 
 Este componente mide la proporción del interés de búsqueda asociado a cada equipo.
 
@@ -65,21 +65,6 @@ $$
 
 **Justificación:**
 Captura la **demanda activa de información**, funcionando como un proxy del interés real del mercado más allá de la exposición pasiva.
-
-## 4. SOV de cobertura mediática (10%)
-
-Este componente mide la proporción de cobertura en medios digitales.
-
-$$
-SOV_{media} = \frac{\text{artículos o notas sobre el equipo}}{\text{total de artículos}}
-$$
-
-**Fuente de datos:**
-
-* Medios deportivos digitales (scraping y agregadores de noticias)
-
-**Justificación:**
-Refleja la **visibilidad editorial y relaciones públicas**, un componente relevante en la construcción de marca.
 
 # Justificación de los pesos
 
