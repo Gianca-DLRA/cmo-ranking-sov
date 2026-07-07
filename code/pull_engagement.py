@@ -40,7 +40,7 @@ def pull_data(API_KEY, LEAGUES, INSTA_TEAMS_DICT, LEAGUES_START_DICT):
         for league in LEAGUES:
                 run_input = {
                         "username": INSTA_TEAMS_DICT[league], 
-                        "resultsLimit": 1000,
+                        "resultsLimit": 1500,
                         "skipPinnedPosts": True,
                         "onlyPostsNewerThan": LEAGUES_START_DICT[league],
                         "dataDetailLevel": "basicData",
