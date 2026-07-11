@@ -1,6 +1,7 @@
 #Import libraries
 from xmlrpc import client
-
+from dotenv import load_dotenv
+import os
 import requests as req
 import json
 from openpyxl import Workbook
@@ -91,7 +92,10 @@ def test():
 
 
 if __name__ == "__main__":
-        API_KEY = "apify_api_7oWYq89jyImoRZaIBxOaSruz27PGdd3Iumkx"
+        load_dotenv()
+        API_KEY = os.getenv("APIFY_TOKEN")
+        if not API_KEY:
+              raise RuntimeError("APIFY_TOKEN not found in environment variables. Please set it in your .env file.") 
 
         LEAGUES = ["LigaMX", "LNBP", "CIBACOPA", "LMB", "LMP",
                     "LFA"]
@@ -104,7 +108,7 @@ if __name__ == "__main__":
             "LNBP": ["gambusinosfresnillo.oficial", "clubsoles", "fuerzaregia", "cbsantossanluis",
                      "abejasdeleon", "correbasketuat", "mineroslnbp", "astrosjalisco", "doradosdechihuahuaoficial",
                      "elcalorcancun", "diablosrojosbasquetbol", "lobospueblamx", "freseros_basquetbol",
-                     "panterasaguascalientes","halconesrojosmx","halconesdexalapa"],
+                     "panterasaguascalientesoficial","halconesrojosmx","halconesdexalapa"],
             "CIBACOPA": ["angelescdmexico", "astrosjalisco", "caballeroscln", "fraylesguasave",
                          "halcones_obregon", "ostionerosgym", "pioneroslm","vamosrayos","toroslagunaoficial",
                          "venadosbasketball", "zonkeysoficial"],
