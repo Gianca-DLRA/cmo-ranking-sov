@@ -1,13 +1,54 @@
-#Import libraries
-from xmlrpc import client
-from dotenv import load_dotenv
 import os
-import requests as req
 import json
-from openpyxl import Workbook
-import pandas as pd
-from apify_client import ApifyClient
 from pathlib import Path
+
+
+INSTA_TEAMS_DICT = {
+    "LigaMX": [
+        "clubamerica", "atlasfc", "atlantefc", "cruzazul", "chivas",
+        "fc_juarez", "clubleon_oficial", "rayados", "clubnecaxa", "tuzosoficial",
+        "clubpuebla", "clubqueretaro", "clubsantos", "xolos",
+        "tolucafc", "clubtigres", "pumasmx", "mazatlanfc", "atletidesanluis",
+    ],
+    "LNBP": [
+        "gambusinosfresnillo.oficial", "clubsoles", "fuerzaregia", "cbsantossanluis",
+        "abejasdeleon", "correbasketuat", "mineroslnbp", "astrosjalisco",
+        "doradosdechihuahuaoficial", "elcalorcancun", "diablosrojosbasquetbol",
+        "lobospueblamx", "freseros_basquetbol", "panterasaguascalientesoficial",
+        "halconesrojosmx", "halconesdexalapa",
+    ],
+    "CIBACOPA": [
+        "angelescdmexico", "astrosjalisco", "caballeroscln", "fraylesguasave",
+        "halcones_obregon", "ostionerosgym", "pioneroslm", "vamosrayos",
+        "toroslagunaoficial", "venadosbasketball", "zonkeysoficial",
+    ],
+    "LMB": [
+        "acererosoficial", "algodonerosunionlaguna", "calientedgo", "charrosbeisbol",
+        "doradoschihlmb", "rielerosags", "clubsaraperos", "sultanesoficial",
+        "tecolotes_2_laredos", "torosdetijuana", "bravosdeleon", "conspiradoresqro",
+        "diablosrojosmx", "elaguilabeisbol", "guerrerosoax", "leonesdeyucatan",
+        "olmecastabasco", "pericos_oficial", "piratasdecampeche", "tigresqr",
+    ],
+    "LMP": [
+        "aguilasdemxli", "algodonerosdeguasavemx", "verdesxsiempre",
+        "charrosbeisbol", "jaguaresdenayaritoficial_", "clubtomaterosoficial",
+        "clubnaranjeros", "yaquisoficial", "mayosbeisbol", "venadosbaseball",
+    ],
+    "LFA": [
+        "caudilloschihuahua", "dinoslfa", "gallosnegroslfa", "mexicas_lfa",
+        "ososlfa", "raptorslfa", "reyes_lfa",
+    ],
+}
+
+
+LEAGUES_START_DICT = {
+    "LigaMX": "2026-01-09",
+    "LNBP": "2025-07-03",
+    "CIBACOPA": "2026-02-14",
+    "LMB": "2025-04-17",
+    "LMP": "2025-10-14",
+    "LFA": "2026-04-09",
+}
 
 
 def save_data_to_json(results, league, pretty=True, ensure_ascii=False):
@@ -79,6 +120,8 @@ def _extract_status(run):
 
 
 def pull_data(API_KEY, LEAGUES, INSTA_TEAMS_DICT, LEAGUES_START_DICT):
+        from apify_client import ApifyClient
+
         client = ApifyClient(API_KEY)
 
         for league in LEAGUES:
@@ -135,43 +178,13 @@ def test():
 
 
 if __name__ == "__main__":
+        from dotenv import load_dotenv
+
         load_dotenv()
         API_KEY = os.getenv("APIFY_TOKEN_6")
         if not API_KEY:
               raise RuntimeError("APIFY_TOKEN not found in environment variables. Please set it in your .env file.") 
 
         LEAGUES = ["LMP", "LFA"]
-
-        INSTA_TEAMS_DICT={
-            "LigaMX": ["clubamerica", "atlasfc", "atlantefc","cruzazul", "chivas", 
-                       "fc_juarez", "clubleon_oficial", "rayados", "clubnecaxa", "tuzosoficial", 
-                       "clubpuebla", "clubqueretaro", "clubsantos", "xolos", 
-                       "tolucafc", "clubtigres", "pumasmx", "mazatlanfc", "atletidesanluis"],
-            "LNBP": ["gambusinosfresnillo.oficial", "clubsoles", "fuerzaregia", "cbsantossanluis",
-                     "abejasdeleon", "correbasketuat", "mineroslnbp", "astrosjalisco", "doradosdechihuahuaoficial",
-                     "elcalorcancun", "diablosrojosbasquetbol", "lobospueblamx", "freseros_basquetbol",
-                     "panterasaguascalientesoficial","halconesrojosmx","halconesdexalapa"],
-            "CIBACOPA": ["angelescdmexico", "astrosjalisco", "caballeroscln", "fraylesguasave",
-                         "halcones_obregon", "ostionerosgym", "pioneroslm","vamosrayos","toroslagunaoficial",
-                         "venadosbasketball", "zonkeysoficial"],
-            "LMB": ["acererosoficial", "algodonerosunionlaguna","calientedgo", "charrosbeisbol", "doradoschihlmb",
-                    "rielerosags", "clubsaraperos","sultanesoficial","tecolotes_2_laredos",
-                    "torosdetijuana", "bravosdeleon", "conspiradoresqro","diablosrojosmx","elaguilabeisbol",
-                    "guerrerosoax","leonesdeyucatan", "olmecastabasco", "pericos_oficial","piratasdecampeche",
-                    "tigresqr"],
-            "LMP": ["aguilasdemxli", "algodonerosdeguasavemx","verdesxsiempre", "charrosbeisbol", "jaguaresdenayaritoficial_", 
-                    "clubtomaterosoficial", "clubnaranjeros", "yaquisoficial", "mayosbeisbol", "venadosbaseball"],
-            "LFA": ["caudilloschihuahua", "dinoslfa", "gallosnegroslfa", "mexicas_lfa", "ososlfa", "raptorslfa", "reyes_lfa"]
-            }
-
-        #Definition of 2026 beginning dates
-        LEAGUES_START_DICT = {
-                "LigaMX": "2026-01-09",
-                "LNBP": "2025-07-03",
-                "CIBACOPA": "2026-02-14",
-                "LMB": "2025-04-17",
-                "LMP": "2025-10-14",
-                "LFA": "2026-04-09"
-        }
         
         pull_data(API_KEY, LEAGUES, INSTA_TEAMS_DICT, LEAGUES_START_DICT)
